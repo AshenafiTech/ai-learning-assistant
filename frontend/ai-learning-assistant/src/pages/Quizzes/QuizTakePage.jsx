@@ -30,16 +30,21 @@ const QuizTakePage = () => {
                 : [],
             }
           : null;
-        
+
         // Check if quiz has already been completed
-        if (normalized && (normalized.userAnswers?.length > 0 || normalized.score !== undefined)) {
-          toast.info("This quiz has already been completed. Redirecting to results...");
+        if (
+          normalized &&
+          (normalized.userAnswers?.length > 0 || normalized.score !== undefined)
+        ) {
+          toast(
+            "This quiz has already been completed. Redirecting to results..."
+          );
           setTimeout(() => {
             navigate(`/quizzes/${quizId}/results`);
           }, 1500);
           return;
         }
-        
+
         setQuiz(normalized);
       } catch (error) {
         toast.error("Failed to load quiz.");
@@ -97,15 +102,21 @@ const QuizTakePage = () => {
             })
             .filter(Boolean)
         : [];
-      
+
       await quizService.submitQuiz(quizId, answersArray);
       toast.success("Quiz submitted successfully!");
       navigate(`/quizzes/${quizId}/results`);
     } catch (error) {
       // Check if the error is about quiz already being completed
-      const errorMessage = error?.error || error?.message || "Failed to submit quiz.";
-      if (errorMessage.toLowerCase().includes("already been completed") || errorMessage.toLowerCase().includes("already completed")) {
-        toast.error("This quiz has already been completed. Redirecting to results...");
+      const errorMessage =
+        error?.error || error?.message || "Failed to submit quiz.";
+      if (
+        errorMessage.toLowerCase().includes("already been completed") ||
+        errorMessage.toLowerCase().includes("already completed")
+      ) {
+        toast.error(
+          "This quiz has already been completed. Redirecting to results..."
+        );
         setTimeout(() => {
           navigate(`/quizzes/${quizId}/results`);
         }, 2000);
@@ -274,7 +285,7 @@ const QuizTakePage = () => {
           <Button
             onClick={handleSubmitQuiz}
             disabled={submitting}
-            className="group relative px-8 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold text-xl transition-all duration-200 shadow-lg shadow-indigo-500/30 active:scale-95 disabled:opacity-50 disabled:cursor-pointer-not-allowed disabled:active:scale-100 overflow-hidden"
+            className="group relative px-8 h-12 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold text-xl transition-all duration-200 shadow-lg shadow-indigo-500/30 active:scale-95 disabled:opacity-50 disabled:cursor-pointer-not-allowed disabled:active:scale-100 overflow-hidden"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               {submitting ? (
@@ -318,7 +329,7 @@ const QuizTakePage = () => {
               className={`w-8 h-8 rounded-lg font-semibold text-xs transition-all duration-200 border
                 ${
                   isCurrent
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 ring-2 ring-indigo-200 scale-105 border-transparent"
+                    ? "bg-linear-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 ring-2 ring-indigo-200 scale-105 border-transparent"
                     : isAnsweredQuestion
                     ? "bg-indigo-100 text-indigo-800 hover:bg-indigo-200 border-indigo-200"
                     : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border-indigo-100"

@@ -123,7 +123,7 @@ const QuizResultPage = () => {
         </Link>
       </div>
 
-      <PageHeader title={`${quiz.title || "Quiz"} Results Overview`} />
+      <PageHeader title="Q Study" icon={Zap} />
 
       {/* Score Card */}
       <div className="bg-white/90 backdrop-blur-xl border-2 border-indigo-100/60 rounded-2xl shadow-xl shadow-indigo-200/30 p-8 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">

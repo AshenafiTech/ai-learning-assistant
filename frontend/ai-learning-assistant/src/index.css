@@ -55,6 +55,23 @@
 }
 
 @layer utilities {
+  /* Animated Gradient Background */
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  .animate-gradient {
+    background: linear-gradient(120deg, #6366F1, #A78BFA, #EC4899, #06B6D4);
+    background-size: 300% 300%;
+    animation: gradientMove 16s ease-in-out infinite;
+  }
   /* Custom Scrollbar Styles */
   .custom-scrollbar {
     scrollbar-width: thin;

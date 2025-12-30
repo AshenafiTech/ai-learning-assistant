@@ -9,6 +9,12 @@ import {
   LogOut,
   GraduationCap,
   X,
+  BarChart2,
+  MessageCircle,
+  Users,
+  Settings,
+  Bell,
+  Bot,
 } from "lucide-react";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
@@ -25,6 +31,16 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
     { to: "/documents", icon: FileText, text: "Documents" },
     { to: "/profile", icon: User, text: "Profile" },
   ];
+
+  // Potential future features
+  const potentialLinks = [
+    { to: "/analytics", icon: BarChart2, text: "Analytics" },
+    { to: "/ai-tutor", icon: Bot, text: "AI Tutor" },
+    { to: "/groups", icon: Users, text: "Study Groups" },
+    { to: "/messages", icon: MessageCircle, text: "Messages" },
+    { to: "/notifications", icon: Bell, text: "Notifications" },
+    { to: "/settings", icon: Settings, text: "Settings" },
+  ];
   return (
     <>
       <div
@@ -35,7 +51,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
       ></div>
 
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur-lg border-indigo-100/60
+        className={`fixed top-0 left-0 h-full w-64 bg-white/90 border-indigo-100/60
             z-50 md:relative md:w-64 md:shrink-0 md:flex md:flex-col md:translate-x-0
             transition-transform  duration-300 ease-in-out shadow-lg 
             ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
@@ -61,7 +77,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               />
             </div>
             <h1 className="text-sm md:text-base font-bold text-slate-900  tracking-tight">
-              Quick Study
+              Q Study
             </h1>
           </button>
           <button
@@ -88,6 +104,40 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                                 ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30"
                                 : "text-indigo-700 hover:bg-indigo-50 hover:text-indigo-900"
                             }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <link.icon
+                    size={18}
+                    strokeWidth={2.5}
+                    className={`transition-transform duration-200 ${
+                      isActive ? "" : "group-hover:translate-x-110"
+                    }`}
+                  />
+                  {link.text}
+                </>
+              )}
+            </NavLink>
+          ))}
+
+          {/* Divider for potential features */}
+          <div className="my-6 border-t border-indigo-100/60" />
+          <div className="text-xs font-semibold text-indigo-400 px-4 pb-2 pt-1 tracking-wide uppercase">
+            More
+          </div>
+          {potentialLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              onClick={toggleSidebar}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2.5 text-sm rounded-xl text-sm font-semi-medium 
+                  transition-all duration-200 ${
+                    isActive
+                      ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30"
+                      : "text-indigo-700 hover:bg-indigo-50 hover:text-indigo-900"
+                  }`
               }
             >
               {({ isActive }) => (

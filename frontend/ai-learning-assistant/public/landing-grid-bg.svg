@@ -1,0 +1,29 @@
+/* Abstract grid SVG background for LandingPage */
+<svg width="100%" height="100%" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="900" fill="url(#bg-gradient)"/>
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="1440" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="0.5" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+  </defs>
+  <g opacity="0.35">
+    <path d="M0 60H1440" stroke="#6366F1" stroke-width="2"/>
+    <path d="M0 180H1440" stroke="#A78BFA" stroke-width="2"/>
+    <path d="M0 300H1440" stroke="#EC4899" stroke-width="2"/>
+    <path d="M0 420H1440" stroke="#06B6D4" stroke-width="2"/>
+    <path d="M0 540H1440" stroke="#6366F1" stroke-width="2"/>
+    <path d="M0 660H1440" stroke="#A78BFA" stroke-width="2"/>
+    <path d="M0 780H1440" stroke="#EC4899" stroke-width="2"/>
+    <path d="M0 900H1440" stroke="#06B6D4" stroke-width="2"/>
+    <path d="M180 0V900" stroke="#6366F1" stroke-width="2"/>
+    <path d="M360 0V900" stroke="#A78BFA" stroke-width="2"/>
+    <path d="M540 0V900" stroke="#EC4899" stroke-width="2"/>
+    <path d="M720 0V900" stroke="#06B6D4" stroke-width="2"/>
+    <path d="M900 0V900" stroke="#6366F1" stroke-width="2"/>
+    <path d="M1080 0V900" stroke="#A78BFA" stroke-width="2"/>
+    <path d="M1260 0V900" stroke="#EC4899" stroke-width="2"/>
+    <path d="M1440 0V900" stroke="#06B6D4" stroke-width="2"/>
+  </g>
+</svg>

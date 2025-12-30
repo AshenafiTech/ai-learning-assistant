@@ -1,0 +1,19 @@
+<!-- Q Study custom logo: graduation cap in a modern indigo-purple gradient square -->
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="48" height="48" rx="14" fill="url(#paint0_linear)"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#A21CAF"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M24 14L36 20L24 26L12 20L24 14Z" fill="#fff"/>
+    <path d="M24 26V32" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="24" cy="32" rx="2.5" ry="1.5" fill="#fff"/>
+    <path d="M18 22V26C18 27.1046 20.6863 28 24 28C27.3137 28 30 27.1046 30 26V22" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <filter id="shadow" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse">
+    <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#6366F1" flood-opacity="0.12"/>
+  </filter>
+</svg>
