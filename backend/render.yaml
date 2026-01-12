@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: ai-learning-assistant-api
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL_QUIZ
+        sync: false
+      - key: GEMINI_MAX_OUTPUT_TOKENS
+        sync: false
+      - key: GEMINI_TEMPERATURE
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: FRONTEND_URLS
+        sync: false

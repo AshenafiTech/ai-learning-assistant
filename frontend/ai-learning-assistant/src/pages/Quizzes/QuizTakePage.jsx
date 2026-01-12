@@ -32,10 +32,11 @@ const QuizTakePage = () => {
           : null;
 
         // Check if quiz has already been completed
-        if (
-          normalized &&
-          (normalized.userAnswers?.length > 0 || normalized.score !== undefined)
-        ) {
+        const alreadyCompleted = Boolean(
+          (normalized?.userAnswers?.length || 0) > 0 || normalized?.completedAt
+        );
+
+        if (alreadyCompleted) {
           toast(
             "This quiz has already been completed. Redirecting to results..."
           );

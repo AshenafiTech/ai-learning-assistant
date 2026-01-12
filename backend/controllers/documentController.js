@@ -4,7 +4,15 @@ import Quiz from '../models/Quiz.js';
 import { extractTextFromFile } from '../utils/pdfParser.js';
 import { chunkText } from '../utils/textChunker.js';
 import fs from 'fs/promises';
-import mongoose from 'mongoose';    
+import mongoose from 'mongoose';   
+
+const buildBaseUrl = (req) => {
+    // Prefer explicit public URL for CDN/proxy friendliness
+    if (process.env.PUBLIC_BASE_URL) return process.env.PUBLIC_BASE_URL.replace(/\/$/, '');
+    return `${req.protocol}://${req.get('host')}`;
+};
+
+const isHttpUrl = (value = '') => value.startsWith('http://') || value.startsWith('https://');
 
 // @desc Upload PDF document
 // @route POST /api/documents/upload
@@ -31,16 +39,18 @@ export const uploadDocument = async (req, res, next) => {
             });
         }
 
-        // Construct the URL for the uploaded file
-        const baseUrl = `http://localhost:${process.env.PORT || 5000}`;
+        // Construct the public URL and store disk path for cleanup
+        const baseUrl = buildBaseUrl(req);
         const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
+        const fileDiskPath = req.file.path;
 
         // Create document record
         const document = await Document.create({
             userId: req.user.id,
             title,
             fileName: req.file.originalname,
-            filePath: fileUrl, // Store the URL instead of the local path
+            filePath: fileUrl,
+            fileDiskPath,
             fileSize: req.file.size,
             status: 'processing',
         });
@@ -203,8 +213,11 @@ export const deleteDocument = async (req, res, next) => {
             });
         }
 
-        // Delete file from filesystem
-        await fs.unlink(document.filePath).catch(() => {});
+        // Delete file from filesystem when we have a disk path
+        const diskPath = document.fileDiskPath || (!isHttpUrl(document.filePath) ? document.filePath : null);
+        if (diskPath) {
+            await fs.unlink(diskPath).catch(() => {});
+        }
 
         // Delete Document 
         await document.deleteOne();

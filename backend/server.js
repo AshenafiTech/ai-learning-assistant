@@ -25,21 +25,35 @@ const app = express();
 // Connect to Database
 connectDB();
 
-// Middleware
+// CORS configuration (supports comma-separated FRONTEND_URLS)
+const allowedOrigins = (process.env.FRONTEND_URLS || "*")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: "*",
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // Allow mobile clients / curl
+      if (allowedOrigins.includes("*")) return callback(null, true);
+      const isAllowed = allowedOrigins.some((allowed) => allowed === origin);
+      return callback(isAllowed ? null : new Error("Not allowed by CORS"), isAllowed);
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    credentials: !allowedOrigins.includes("*"),
   })
 );
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static folder for uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Health check
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 // Routes
 app.use("/api/auth", authRoutes);

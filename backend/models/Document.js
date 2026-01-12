@@ -19,6 +19,9 @@ const documentSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a file path'],
     },
+    fileDiskPath: {
+        type: String,
+    },
     fileSize: {
         type: Number,
         required: true

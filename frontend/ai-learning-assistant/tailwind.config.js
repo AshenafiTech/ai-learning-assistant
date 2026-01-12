@@ -46,6 +46,21 @@ module.exports = {
         xl: "1rem",
         "2xl": "1.5rem",
       },
+      animation: {
+        'gradient-x': 'gradient-x 8s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%, 100%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-16px)' },
+        },
+      },
     },
   },
   plugins: [],

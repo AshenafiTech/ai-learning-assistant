@@ -1,4 +1,9 @@
-export const BASE_URL = "http://localhost:5000";
+const envBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+const defaultBase = typeof window !== "undefined" && window.location.origin
+  ? window.location.origin
+  : "http://localhost:5000";
+
+export const BASE_URL = envBase || defaultBase;
 
 export const API_PATHS = {
   AUTH: {

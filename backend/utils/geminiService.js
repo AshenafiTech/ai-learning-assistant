@@ -12,6 +12,13 @@ if (!process.env.GEMINI_API_KEY) {
     console.warn('Warning: GEMINI_API_KEY is not set in environment variables.');
 }
 
+const DEFAULT_MODEL = 'gemini-2.5-flash-lite';
+const generationConfig = {
+    // Allow longer, more detailed generations while keeping output bounded
+    maxOutputTokens: Number(process.env.GEMINI_MAX_OUTPUT_TOKENS) || 1024,
+    temperature: Number(process.env.GEMINI_TEMPERATURE) || 0.6,
+};
+
 // Default to the same model used successfully for flashcards; override with GEMINI_MODEL_QUIZ if needed
 const QUIZ_MODEL = process.env.GEMINI_MODEL_QUIZ || 'gemini-2.5-flash-lite';
 
@@ -35,8 +42,9 @@ export const generateFlashcards = async (text, count = 10) => {
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-lite',
+            model: DEFAULT_MODEL,
             contents: prompt,
+            generationConfig,
         });
 
         const generatedText = response?.response?.text?.() || response?.text || '';
@@ -100,6 +108,7 @@ ${text.substring(0, 15000)}`;
         const response = await ai.models.generateContent({
             model: QUIZ_MODEL,
             contents: prompt,
+            generationConfig,
         });
 
         const generatedText = response?.response?.text?.() || response?.text || '';
@@ -169,8 +178,9 @@ export const generateSummary = async (text) => {
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-lite',
+            model: DEFAULT_MODEL,
             contents: prompt,
+            generationConfig,
         });
 
         const generatedText = response.text;
@@ -191,8 +201,9 @@ export const generateSummary = async (text) => {
 export const chatWithContext = async (question, chunks) => {
     const context = chunks.map((c, i) => `[Chunk ${i + 1}]\n${c.content}`).join('\n\n');
     
-    const prompt = `Based on the following context from a document, Analyze the context and answer the user's question accurately.
-    If the answer is not in the context, say so.
+    const prompt = `Based on the following context from a document, analyze and answer the user's question thoroughly.
+    If the answer is not in the context, say so explicitly.
+    Provide a structured response of 4-8 sentences that explains the reasoning and references the relevant details.
 
     Context:
     ${context}
@@ -204,8 +215,9 @@ export const chatWithContext = async (question, chunks) => {
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-lite',
+            model: DEFAULT_MODEL,
             contents: prompt,
+            generationConfig,
         });
 
         const generatedText = response.text;
@@ -224,17 +236,17 @@ export const chatWithContext = async (question, chunks) => {
  * @returns {Promise<string>}
  */
 export const explainConcept = async (concept, context) => {
-    const prompt = `Explain the following "${concept}" based on the following context.
-    Provide a clear and concise explanation that's easy to understand.
-    Include examples if relevant.
+    const prompt = `Explain the concept "${concept}" using the context below.
+    Provide a clear, thorough explanation in 5-9 sentences, include an example if relevant, and keep jargon minimal.
 
     Context:
     ${context.substring(0, 10000)}`;
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-lite',
+            model: DEFAULT_MODEL,
             contents: prompt,
+            generationConfig,
         });  
 
         const generatedText = response.text;

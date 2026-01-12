@@ -10,6 +10,7 @@ import ChatInterface from "../../components/chat/ChatInterface";
 import AIActions from "../../components/ai/AIActions";
 import FlashcardManager from "../../components/flashcards/FlashcardManager";
 import QuizManager from "../../components/quizzes/QuizManager";
+import { BASE_URL } from "../../utils/apiPaths";
 
 const DocumentDetailPage = () => {
   const { id } = useParams();
@@ -44,9 +45,8 @@ const DocumentDetailPage = () => {
       return filePath;
     }
 
-    const baseUrl =
-      process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
-    return `${baseUrl}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
+    const normalizedBase = BASE_URL.replace(/\/$/, "");
+    return `${normalizedBase}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
   };
 
   const renderContent = () => {
